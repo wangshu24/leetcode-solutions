@@ -6,7 +6,7 @@ var removeDuplicates = function(nums) {
     let result = [];
     let duplicate = [];
     nums.forEach(n => {
-        if(!result.includes(n)) {result.push(n)}
+        !result.includes(n) && result.push(n)
     })
     for(let i = 0; i<result.length; i++){
         nums[i] = result[i]
