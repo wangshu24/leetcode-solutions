@@ -3,11 +3,11 @@
  * @return {boolean}
  */
 var containsDuplicate = function(nums) {
-    let duplicate = false;
+
     let map = new Map()
     for(let num of nums){
-        if(map.get(num)===1){duplicate = true}
+        if(map.get(num)!==undefined){return true}
         map.set(num, (map.get(num) || 0) + 1);
     }
-    return duplicate
+    return false
     };
