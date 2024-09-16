@@ -12,6 +12,6 @@ var findDuplicates = function(nums) {
     for(let x in freq){
         if(freq[x]>1) {result.push(x)}
     }
-    console.log(freq)
+
     return result;
 };
