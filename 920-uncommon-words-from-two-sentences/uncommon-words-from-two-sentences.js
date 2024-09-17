@@ -15,8 +15,7 @@ var uncommonFromSentences = function(s1, s2) {
     for(let i of s2Arr){
         s2Obj[i] = (s2Obj[i] || 0) + 1 
     }
-    console.log(s1Obj)
-    console.log(s2Obj)
+
     for(let i in s1Obj){
         if(!s2Obj[i] && s1Obj[i] < 2) {result.push(i)}
     }
