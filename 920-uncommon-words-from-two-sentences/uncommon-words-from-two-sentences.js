@@ -23,15 +23,6 @@ var uncommonFromSentences = function(s1, s2) {
      for(let i in s2Obj){
         if(!s1Obj[i] && s2Obj[i] < 2) {result.push(i)}
     }
-    // s1Arr.forEach(e => {
-    //     if(!s2Arr.includes(e)){
-    //         result.push(e)
-    //     }
-    // })
-    // s2Arr.forEach(e => {
-    //     if(!s1Arr.includes(e)){
-    //         result.push(e)
-    //     }
-    // })
+
     return result
 };
