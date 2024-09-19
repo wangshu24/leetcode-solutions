@@ -25,7 +25,6 @@ var smallestNumber = function(num) {
         }
     } else {
         strArr.sort((a,b)=> a-b)
-        console.log(strArr)
         if(strArr[0] === "0" && strArr.length > 1){
             let firstPositiveIntIndex = strArr.findIndex(i => parseInt(i) > 0)
             strArr[0] = strArr[firstPositiveIntIndex]
