@@ -23,6 +23,11 @@ var mergeTwoLists = function(list1, list2) {
         }
         cur = cur.next
     }
-    cur.next = list1 || list2;
+
+    if (list1 !== null) {
+        cur.next = list1;
+    } else if (list2 !== null) {
+        cur.next = list2;
+    }
     return result.next
 };
