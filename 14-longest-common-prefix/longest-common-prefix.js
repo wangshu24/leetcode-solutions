@@ -3,52 +3,20 @@
  * @return {string}
  */
 
-class TrieNode {
-    constructor(){
-        this.children = {}
-        this.count = 0
-    }
-}
-
-class Trie {
-    constructor(){
-        this.root = new TrieNode()
-    }
-
-    insert(word){
-        let node = this.root
-        for(const char of word){
-            if(!node.children[char]){
-                node.children[char] = new TrieNode()
-            }
-            node = node.children[char]
-            node.count++
-        }
-    }
-
-    getLongestCommonPrefix(word, num){
-        let node = this.root
-        let result = ""
-        for(const char of word){
-            if(node.children[char]){
-                if( node.children[char].count === num){
-                    result+=char
-                    node = node.children[char]
-                }
-            }
-        }
-
-        return result
-    }
-}
-
 var longestCommonPrefix = function(strs) {
-    let trie = new Trie()
-    for(const word of strs){
-        trie.insert(word)
-    }
+    let prefix = ""
+    
+    if(strs.length === 0){return prefix}
 
-    const prefix = trie.getLongestCommonPrefix(strs.sort()[strs.length-1], strs.length) 
+    strs.sort()
+    let short = strs[0]
+    let long = strs[strs.length-1]
+
+    for(let i=0; i<short.length; i++){
+        if(short[i] !== long[i]){
+            return prefix
+        } else {prefix+=short[i]}
+    }
 
     return prefix
 };
