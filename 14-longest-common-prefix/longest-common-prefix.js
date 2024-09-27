@@ -29,13 +29,6 @@ class Trie {
     getLongestCommonPrefix(word, num){
         let node = this.root
         let result = ""
-        // console.log(node)
-        // console.log(node)
-        // while(node[Object.keys(node)[0]].count === num){
-        //    result+=Object.keys(node)[0]
-        //    node = node[Object.keys(node)[0]]
-        //    node = node.children
-        // }
         for(const char of word){
             if(node.children[char]){
                 if( node.children[char].count === num){
