@@ -7,14 +7,16 @@ func containsNearbyDuplicate(nums []int, k int) bool {
     
     for _, v := range col {
         if len(v) >1 {
-            for i := 0; i < len(v)-1; i++ {
-                fmt.Println(v[i+1])
-                fmt.Println(v[i])
-                if (int(v[i+1]) - int(v[i])) <= k {
-                    result = true
-                    break
+            for i,j := range v {
+                if i+1<len(v) {
+                    fmt.Println(v[i+1])
+                    fmt.Println(j)
+                    if ((v[i+1] - v[i]) <= k) {
+                        result = true
+                        break
+                    }
                 }
-            } 
+            }
         }
     }
 
