@@ -1,52 +1,21 @@
 func canArrange(arr []int, k int) bool {
-    // Frequency array to store the count of remainders
-    remainderFreq := make([]int, k)
-    
-    // Step 1: Calculate the remainder for each element and store the frequency
-    for _, num := range arr {
-        remainder := ((num % k) + k) % k // Ensure non-negative remainder
-        remainderFreq[remainder]++
+    remain := map[int]int{}
+    for i:=0; i< len(arr); i++ {
+        remain[((arr[i]%k)+k)%k]++
     }
-    
-    // Step 2: Check if the pairing condition holds
-    for i := 0; i <= k/2; i++ {
-        if i == 0 {
-            // Elements with remainder 0 must pair among themselves
-            if remainderFreq[i] % 2 != 0 {
-                return false
+    fmt.Println(remain)
+
+    for key,val := range remain {
+        if key == 0 { if val%2 != 0 {
+            return false
             }
         } else {
-            // Remainder i must pair with remainder k-i
-            if remainderFreq[i] != remainderFreq[k-i] {
-                return false
-            }
+            if remain[k-key] != val {return false}
         }
     }
-    
+
     return true
 }
-
-// func canArrange(arr []int, k int) bool {
-//     remain := map[int]int{}
-//     for i:=0; i< len(arr); i++ {
-//         remain[arr[i]] = arr[i]%k
-//     }
-//     fmt.Println(remain)
-
-//     for key,val  := range remain {
-//         if key < k {
-//             if !slices.ContainsFunc(arr, func(n int) bool {return (n+key)%k == 0}) { 
-//                 fmt.Println("got ", key, " lower")
-//                 return false}
-//         } else {
-//             if !slices.ContainsFunc(arr, func(n int) bool {return n == val || n%k==val}) { 
-//                 fmt.Println("got ", key, " higher")
-//                 return false}
-//         }
-//     }
-
-//     return true
-// }
 
 
 
