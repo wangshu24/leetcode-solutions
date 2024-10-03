@@ -4,7 +4,6 @@
  * @return {number}
  */
 func minSubarray(nums []int ,p int ) int {
-    //sub := []int{}
     numsSum := 0
     remainMap := map[int]int{}
     for i:=0; i <len(nums);i++ {
@@ -20,26 +19,6 @@ func minSubarray(nums []int ,p int ) int {
         return 0
     } 
 
-    // if remain%p == 0 {
-    //     return 0
-    // }  else if slices.Contains(remainMap, remain) { return 1} else {
-    //     for i:=0; i<len(remainMap);i++{
-    //         remain-=remainMap[i]
-    //         fmt.Println("remainder to be subtracted ", remainMap[i], " remain = ", remain)
-    //         if remain == 0 {
-    //             sub = append(sub,remainMap[i] )
-    //             return len(sub)
-    //         } else if remain > 0 {
-    //             sub = append(sub,remainMap[i] )
-    //         } else {
-    //             remain = numsSum%p
-    //             sub = nil
-    //         }
-    //     }
-    //     fmt.Println("final remain is: ", remain)
-    //     if remain != 0 {return -1}
-    // }
-    
     for i:=0; i< len(nums);i++{
         prefixSum+= nums[i]
         currentRem := prefixSum%p
@@ -47,7 +26,6 @@ func minSubarray(nums []int ,p int ) int {
 
         if id, ok := remainMap[targetRem]; ok {
             if i - id < minLength {
-                fmt.Println("got here")
                 minLength = i - id
             }
         }
