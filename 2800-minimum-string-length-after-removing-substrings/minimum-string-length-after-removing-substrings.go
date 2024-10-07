@@ -25,6 +25,6 @@ func minLength(s string) int {
             s = strings.Replace(s, "CD", "", 1)
         } else  { found = false}
     }   
-    fmt.Println(s)
+
     return len(s)
 }
