@@ -7,7 +7,6 @@ func minLength(s string) int {
 		s = strings.Replace(s, subStr, "", 1)
 	}
 
-	fmt.Println(s)
 	return len(s)
 }
 
