@@ -19,7 +19,7 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
             sum+=l2.Val
             l2 = l2.Next  
         }
-        temp.Next = &ListNode{ Val : sum%10, Next : nil}
+        temp.Next = &ListNode{ Val : sum%10}
         carryOver = sum/10
         temp = temp.Next
     }
