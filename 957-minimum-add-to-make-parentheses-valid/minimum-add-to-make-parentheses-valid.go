@@ -11,7 +11,6 @@ func minAddToMakeValid(s string) int {
                 opening--
                 add--
                 } else {
-                    // opening++
                     add++
                 } 
         }
