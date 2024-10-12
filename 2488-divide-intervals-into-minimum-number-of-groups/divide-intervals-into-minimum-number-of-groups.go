@@ -8,11 +8,6 @@ func minGroups(intervals [][]int) int {
         end = max(end, interval[1])
     }
 
-    // for i:=0; i <len(intervals);i++{
-    //     if intervals[i][0] < start { start = intervals[i][0] }
-    //     if intervals[i][1] > end { end = intervals[i][1] } 
-    // }
-
     endArr := make([]int, end+2)
     for _,interval:= range intervals{
         endArr[interval[0]]++
