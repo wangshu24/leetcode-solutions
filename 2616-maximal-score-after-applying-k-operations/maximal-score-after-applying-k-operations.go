@@ -24,11 +24,11 @@ func (h *MaxHeap) Pop() interface{} {
 func maxKelements(nums []int, k int) int64 {
     maxHeap := &MaxHeap{}
     heap.Init(maxHeap)
-    
     for _, num := range nums {
         heap.Push(maxHeap, int64(num))
     }
     
+    fmt.Println(maxHeap)
     var score int64 = 0
     
     for i := 0; i < k; i++ {
