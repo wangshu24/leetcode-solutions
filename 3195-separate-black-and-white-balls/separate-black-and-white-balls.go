@@ -20,10 +20,12 @@ func minimumSteps(s string) int64 {
         if charArr[i] == 48 {
             count+= i - black + leftGap
             black = i 
+            continue
         }
         if charArr[i] == 49 {
             leftGap+=i-black
             black  = i
+            continue
         }
     }
 
