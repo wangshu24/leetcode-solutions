@@ -14,15 +14,7 @@ func minimumSteps(s string) int64 {
     
     count:=0
     black := slices.Index(charArr, 49)
-    //white := slices.Index(charArr, 48)
-    fmt.Println(black)
 
-    // slices.SortFunc(charArr, func(a, b byte) int {
-	// 	result := cmp.Compare(a,b)
-    //     //fmt.Println(result)
-    //     if result < 0 {count++}
-    //     return result
-	// })
     leftGap:=0
     for i:=black+1;i<len(charArr);i++{
         if charArr[i] == 48 {
@@ -35,8 +27,5 @@ func minimumSteps(s string) int64 {
         }
     }
 
-
-    fmt.Println(count)
-    fmt.Print(charArr)
     return int64(count)
 }
