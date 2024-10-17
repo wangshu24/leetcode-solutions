@@ -25,7 +25,7 @@ func longestDiverseString(a int, b int, c int) string {
             currA=0
             c--
         }
-        fmt.Println(res)
+
         i++
     }
 
