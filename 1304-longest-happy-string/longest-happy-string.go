@@ -1,67 +1,48 @@
 func longestDiverseString(a int, b int, c int) string {
-	s := ""
-	i := 0
-	for {
-		if a == 0 && b == 0 && c == 0 {
-			//no characters available, break
-			break
-		}
-		flagA, flagB, flagC := false, false, false
-		if i >= 2 && s[i-1] == s[i-2] {
-			flagA = s[i-1] == 'a'
-			flagB = s[i-1] == 'b'
-			flagC = s[i-1] == 'c'
-		}
-		char := getNextChar(a, b, c, flagA, flagB, flagC)
-		if char == 0 {
-			break
-		} else {
-            //add a new char to the string, subtract 1 from the group
-			s += string(char)
-			if char == 'a' {
-				a--
-			}
-			if char == 'b' {
-				b--
-			}
-			if char == 'c' {
-				c--
-			}
-		}
-        //move i one step forward
-		i++
-	}
-	return s
-}
+    res := ""
+    //streak:=""
+    currA, currB, currC := 0, 0, 0
+    totalLen := a+b+c
+    i:=0
 
-func getNextChar(a, b, c int, flagA, flagB, flagC bool) byte {
-	//mask out character we don't want to pick from
-	if flagA {
-		a = 0
-	}
-	if flagB {
-		b = 0
-	}
-	if flagC {
-		c = 0
-	}
-	mostChar := charWithMax(a, b, c)
-	if mostChar == 0 {
-		//no character available
-		return 0
-	}
-	return mostChar
-}
+    for i<totalLen {
+        if (currA != 2 && a>=b && a>=c) || (a>0 && (currB==2 || currC==2) )  {
+            res+="a"
+            currA++
+            currB=0
+            currC=0
+            a--
+        } else if (currB != 2 && b>=c && b>=a) || (b>0 && (currA==2 || currC==2) ) {
+            res+="b"
+            currB++
+            currA=0
+            currC=0
+            b--
+        } else if (currC != 2 && c>=a && c>=b) || (c>0 && (currA==2 || currB==2) )  {
+            res+="c"
+            currC++
+            currB=0
+            currA=0
+            c--
+        }
+        fmt.Println(res)
+        i++
+    }
 
-func charWithMax(a, b, c int) byte {
-	if a >= b && a >= c && a > 0 {
-		return 'a'
-	} else if b >= a && b >= c && b > 0 {
-		return 'b'
-	}
-	if c > 0 {
-		return 'c'
-	}
-	//no character available
-	return 0
+    
+    // cont := true
+    // for cont {
+    //     curr := slices.Max(ints)
+    //     charIndex :=slices.Index(ints, curr)
+    //     charBytes := charIndex + 97
+    //     res+=string(byte(charBytes))
+    //     streak+=string(byte(charBytes)) 
+
+        
+    //     ints[charIndex] = ints[charIndex] - 1        
+    //     if slices.Max(ints) == 0 {cont = false}
+    // }
+
+    
+    return res
 }
