@@ -1,6 +1,5 @@
 func longestDiverseString(a int, b int, c int) string {
     res := ""
-    //streak:=""
     currA, currB, currC := 0, 0, 0
     totalLen := a+b+c
     i:=0
@@ -28,21 +27,6 @@ func longestDiverseString(a int, b int, c int) string {
 
         i++
     }
-
-    
-    // cont := true
-    // for cont {
-    //     curr := slices.Max(ints)
-    //     charIndex :=slices.Index(ints, curr)
-    //     charBytes := charIndex + 97
-    //     res+=string(byte(charBytes))
-    //     streak+=string(byte(charBytes)) 
-
-        
-    //     ints[charIndex] = ints[charIndex] - 1        
-    //     if slices.Max(ints) == 0 {cont = false}
-    // }
-
-    
+ 
     return res
 }
