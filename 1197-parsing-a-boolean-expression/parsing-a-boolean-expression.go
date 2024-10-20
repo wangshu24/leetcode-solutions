@@ -1,47 +1,50 @@
 func parseBoolExpr(expression string) bool {
-    stack := []rune{}
+    stk := []rune{}  // Stack to hold characters and operators
 
+    // Iterate over each character in the expression
     for _, c := range expression {
-        if c == ')' {
-            subExpr := []rune{}
-            for stack[len(stack)-1] != '(' {
-                subExpr = append(subExpr, stack[len(stack)-1])
-                stack = stack[:len(stack)-1]
-            }
-            stack = stack[:len(stack)-1] // Remove '('
+        if c != ')' && c != ',' {
+            stk = append(stk, c)  // Push valid characters to the stack
+        } else if c == ')' {  // When ')' is encountered, evaluate subexpression
+            exp := []bool{}  // Slice to hold boolean values of the current subexpression
             
-            op := stack[len(stack)-1]
-            stack = stack[:len(stack)-1] // Remove operator
-
-            if op == '!' {
-                if subExpr[0] == 't' {
-                    stack = append(stack, 'f')
-                } else {
-                    stack = append(stack, 't')
-                }
-            } else if op == '&' {
-                result := 't'
-                for _, e := range subExpr {
-                    if e == 'f' {
-                        result = 'f'
-                        break
-                    }
-                }
-                stack = append(stack, result)
-            } else if op == '|' {
-                result := 'f'
-                for _, e := range subExpr {
-                    if e == 't' {
-                        result = 't'
-                        break
-                    }
-                }
-                stack = append(stack, result)
+            // Pop characters until '(' is found, collect 't' or 'f' values
+            for len(stk) > 0 && stk[len(stk)-1] != '(' {
+                t := stk[len(stk)-1]
+                stk = stk[:len(stk)-1]
+                exp = append(exp, t == 't')
             }
-        } else if c != ',' {
-            stack = append(stack, c)
+            
+            stk = stk[:len(stk)-1]  // Pop the '(' from the stack
+            
+            if len(stk) > 0 {
+                t := stk[len(stk)-1]  // Get the operator before '('
+                stk = stk[:len(stk)-1]
+                v := exp[0]  // Initialize result with the first value
+                
+                // Perform the corresponding logical operation
+                if t == '&' {  // AND operation
+                    for _, b := range exp {
+                        v = v && b
+                    }
+                } else if t == '|' {  // OR operation
+                    for _, b := range exp {
+                        v = v || b
+                    }
+                } else {  // NOT operation
+                    v = !v
+                }
+                
+                // Push the result back to the stack as 't' or 'f'
+                if v {
+                    stk = append(stk, 't')
+                } else {
+                    stk = append(stk, 'f')
+                }
+            }
         }
     }
 
-    return stack[0] == 't'
+    // Return the final result from the stack
+    return stk[len(stk)-1] == 't'
 }
