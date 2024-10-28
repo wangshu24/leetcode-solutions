@@ -1,24 +1,23 @@
 func longestSquareStreak(nums []int) int {
-    mp := make(map[int]int)
-    sort.Ints(nums)
-    res := -1
+    numMap := map[int]int{}
+    slices.Sort(nums)
+    str:=-1
 
-    for _, num := range nums {
+    for _,num := range nums {
         sqrt := int(math.Sqrt(float64(num)))
-
         if sqrt*sqrt == num {
-            if val, exists := mp[sqrt]; exists {
-                mp[num] = val + 1
-                if mp[num] > res {
-                    res = mp[num]
+            if val, exist := numMap[sqrt]; exist {
+                numMap[num] = val + 1
+                if numMap[num] > str {
+                    str = numMap[num]
                 }
             } else {
-                mp[num] = 1
+                numMap[num] = 1
             }
         } else {
-            mp[num] = 1
+            numMap[num] = 1
         }
     }
 
-    return res
+    return str
 }
