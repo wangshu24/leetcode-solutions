@@ -1,30 +1,31 @@
-import (
-    "math"
-)
-
 func minimizedMaximum(n int, quantities []int) int {
-    low, high := 1, 0
-    for _, quantity := range quantities {
-        if quantity > high {
-            high = quantity
-        }
-    }
-    res := 0
-
-    for low <= high {
-        mid := low + (high-low)/2
-        storesNeeded := 0
-        for _, quantity := range quantities {
-            storesNeeded += int(math.Ceil(float64(quantity) / float64(mid)))
-        }
-        
-        if storesNeeded <= n {
-            res = mid
-            high = mid - 1
-        } else {
-            low = mid + 1
-        }
-    }
-    
-    return res
+	sort.Sort(sort.Reverse(sort.IntSlice(quantities)))
+	emptyShop := n - len(quantities)
+	// binary-search,  must take care of left-bound and right-bound
+	l, r := 1, quantities[0]
+	minMax := r
+	loop:
+	for l <= r {
+		m := (l+r)>>1
+		resShop := emptyShop
+		for _, v := range quantities {
+			if v <= m {
+				break
+			}
+			needShop := v / m
+			if v % m == 0 {
+				needShop--
+			}
+			resShop -= needShop
+			if resShop < 0 {
+				l = m + 1
+				continue loop
+			}
+		}
+		if m < minMax {
+			minMax = m
+		}
+		r = m - 1
+	}
+	return minMax
 }
