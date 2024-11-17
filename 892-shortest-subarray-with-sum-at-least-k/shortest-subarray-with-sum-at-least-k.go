@@ -1,42 +1,33 @@
 func shortestSubarray(nums []int, k int) int {
-    res := math.MaxInt32
+    n := len(nums)
+    sum := make([]int64, n+1)
     
-    // Use a slice to implement deque functionality
-    type pair struct {
-        prefixSum int64
-        endIdx    int
+    for i := 0; i < n; i++ {
+        sum[i+1] = sum[i] + int64(nums[i])
     }
-    q := make([]pair, 0)
     
-    var curSum int64
-    for r := 0; r < len(nums); r++ {
-        curSum += int64(nums[r])
-        if curSum >= int64(k) {
-            res = min(res, r+1)
+    q := make([]int, n+1)
+    l, r := 0, 0
+    minLength := n + 1
+    
+    for i := 0; i < len(sum); i++ {
+        for r > l && sum[i] >= sum[q[l]]+int64(k) {
+            if i-q[l] < minLength {
+                minLength = i - q[l]
+            }
+            l++
         }
         
-        // Find the minimum valid window ending at r
-        for len(q) > 0 && curSum-q[0].prefixSum >= int64(k) {
-            res = min(res, r-q[0].endIdx)
-            q = q[1:] // pop front
+        for r > l && sum[i] <= sum[q[r-1]] {
+            r--
         }
         
-        // Validate the monotonic deque
-        for len(q) > 0 && q[len(q)-1].prefixSum > curSum {
-            q = q[:len(q)-1] // pop back
-        }
-        q = append(q, pair{curSum, r})
+        q[r] = i
+        r++
     }
     
-    if res == math.MaxInt32 {
-        return -1
+    if minLength <= n {
+        return minLength
     }
-    return res
-}
-
-func min(a, b int) int {
-    if a < b {
-        return a
-    }
-    return b
+    return -1
 }
