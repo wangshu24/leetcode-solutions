@@ -1,33 +1,39 @@
 func shortestSubarray(nums []int, k int) int {
     n := len(nums)
-    sum := make([]int64, n+1)
-    
+    // Create prefix sum array
+    prefix := make([]int64, n+1)
     for i := 0; i < n; i++ {
-        sum[i+1] = sum[i] + int64(nums[i])
+        prefix[i+1] = prefix[i] + int64(nums[i])
     }
     
-    q := make([]int, n+1)
-    l, r := 0, 0
-    minLength := n + 1
+    // Initialize result and deque
+    result := n + 1
+    deque := make([]int, 0, n+1)
     
-    for i := 0; i < len(sum); i++ {
-        for r > l && sum[i] >= sum[q[l]]+int64(k) {
-            if i-q[l] < minLength {
-                minLength = i - q[l]
-            }
-            l++
+    for i := 0; i <= n; i++ {
+        // Remove indices that break monotonicity
+        for len(deque) > 0 && prefix[i] <= prefix[deque[len(deque)-1]] {
+            deque = deque[:len(deque)-1]
         }
         
-        for r > l && sum[i] <= sum[q[r-1]] {
-            r--
+        // Check for valid subarrays
+        for len(deque) > 0 && prefix[i]-prefix[deque[0]] >= int64(k) {
+            result = min(result, i-deque[0])
+            deque = deque[1:]
         }
         
-        q[r] = i
-        r++
+        deque = append(deque, i)
     }
     
-    if minLength <= n {
-        return minLength
+    if result <= n {
+        return result
     }
     return -1
+}
+
+func min(a, b int) int {
+    if a < b {
+        return a
+    }
+    return b
 }
