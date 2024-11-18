@@ -1,41 +1,46 @@
+//IMOW
+
 func decrypt(code []int, k int) []int {
-	length := len(code)
-	result := make([]int, length)
+    res := make([]int, len(code))
+    if k == 0 {return res}
 
-	kIndex := func(startIndex, i int) int {
-		return (startIndex + i + length) % length
-	}
+    kIndex := func(startInd, k int) int{
+        if k>0 {
+            return (startInd + k) % len(code)
+        } else {
 
-	prefixWindow, i := 0, k
+            newInd :=startInd -1 + len(code) + k
+            if newInd >= len(code) {
+                return newInd % len(code) 
+            } else {
+                return newInd
+            }
+        }
+    }
 
-	if k == 0 {
-		return result
-	}
+    currKsum := 0
+    copyK := int(math.Abs(float64(k)))
+    for i:= 0; i < copyK; i++ {
+        if k >0 {
+            currKsum += code[i+1]
+        } else {
+            currKsum += code[i + len(code) + k]
+        }
 
-	for i != 0 {
-		prefixWindow += code[kIndex(0, i)]
-		if i > 0 {
-			i--
-		} else {
-			i++
-		}
-	}
+    }
+    res[0] = currKsum
+    fmt.Println(currKsum)
 
-	result[0] = prefixWindow
+    for i:=1 ; i < len(code); i++ {
+        if k > 0 {
+            currKsum = currKsum - code[i] + code[kIndex(i, k)]
+            res[i] = currKsum
+        } else {
+            fmt.Println("currKsum is: ", currKsum, " i is: ", i, " add " , code[i-1], " minus ", code[kIndex(i,k)], " at index: ", kIndex(i,k))
+            currKsum = currKsum + code[i-1] - code[kIndex(i,k)]
+            res[i] = currKsum 
+        }
+    }
 
-	for j := 1; j < length; j++ {
-		if k > 0 {
-			prefixWindow += code[kIndex(j, k)]
-		} else {
-			prefixWindow += code[kIndex(j, -1)]
-		}
-		if k > 0 {
-			prefixWindow -= code[kIndex(j, 0)]
-		} else {
-			prefixWindow -= code[kIndex(j-1, k)]
-		}
-		result[j] = prefixWindow
-	}
-
-	return result
+    return res
 }
