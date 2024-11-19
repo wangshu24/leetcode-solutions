@@ -1,31 +1,35 @@
 func maximumSubarraySum(nums []int, k int) int64 {
-    n := len(nums)
-    elements := make(map[int]bool)
-    currentSum := int64(0)
-    maxSum := int64(0)
-    begin := 0
+    res := 0
+    kMap:= map[int]int{}
+    being:=0
+    tempMax := 0
+    for i:=0; i < len(nums); i++ {
+       if kMap[nums[i]] == 0 {
+            kMap[nums[i]]++
+            tempMax+= nums[i]
 
-    for end := 0; end < n; end++ {
-        if !elements[nums[end]] {
-            currentSum += int64(nums[end])
-            elements[nums[end]] = true
-
-            if end-begin+1 == k {
-                if currentSum > maxSum {
-                    maxSum = currentSum
-                }
-                currentSum -= int64(nums[begin])
-                delete(elements, nums[begin])
-                begin++
+            if i - being + 1==k {
+                res = max(res, tempMax)
+                tempMax -= nums[being]
+                kMap[nums[being]]--
+                being++
+            }        
+       } else {
+            for being < i && nums[being] != nums[i]{
+                tempMax -= nums[being]
+                kMap[nums[being]]--
+                being++
             }
-        } else {
-            for begin < end && nums[begin] != nums[end] {
-                currentSum -= int64(nums[begin])
-                delete(elements, nums[begin])
-                begin++
-            }
-            begin++
-        }
+            being++
+       }
     }
-    return maxSum
+
+    return int64(res)
+}
+
+func max(a,b int) int {
+    if a>b {
+        return a
+    }
+    return b
 }
