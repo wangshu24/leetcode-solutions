@@ -8,7 +8,7 @@ func takeCharacters(s string, k int) int {
     }
     
     if kmap[0] < k || kmap[1] < k || kmap[2] < k {return -1}
-    fmt.Println(kmap)
+
     for r:=0; r< len(s); r++{
         kmap[s[r]-97]--
 
