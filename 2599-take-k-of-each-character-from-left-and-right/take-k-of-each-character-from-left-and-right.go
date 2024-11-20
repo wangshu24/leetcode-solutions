@@ -13,13 +13,10 @@ func takeCharacters(s string, k int) int {
         kmap[s[r]-97]--
 
         if slices.Min(kmap) < k {
-            fmt.Println("left is: ", l)
-            fmt.Println("right is: ", r)
             for slices.Min(kmap) < k {
                 kmap[s[l]-97]++
                 l++
-            }
-           
+            }      
         } else {
             fmt.Println(r-l)
             remove = max(remove, r-l+1)
