@@ -1,41 +1,26 @@
-func countUnguarded(m int, n int, guards [][]int, walls [][]int) int {
-    // Initialize grid with zeros
-    grid := make([]uint8, m*n)
-    
-    // Mark guards and walls as 2
-    for _, pos := range guards {
-        grid[pos[0]*n+pos[1]] = 2
+func countUnguarded(m int, n int, G [][]int, W [][]int) int {
+  result := 0
+  D := make([]byte, m*n)
+  for _, w := range W {
+    D[w[0]*n + w[1]] = 1
+  }
+  for _, g := range G {
+    D[g[0]*n + g[1]] = 1
+  }
+
+  for _, g := range G {
+    r, c := g[0], g[1]
+    for r := r-1; r >= 0 && D[r*n+c] != 1; r-- { D[r*n+c] = 2 }
+    for r := r+1; r < m && D[r*n+c] != 1; r++ { D[r*n+c] = 2 }
+    for c := c-1; c >= 0 && D[r*n+c] != 1; c-- { D[r*n+c] = 2 }
+    for c := c+1; c < n && D[r*n+c] != 1; c++ { D[r*n+c] = 2 }
+  }
+
+  for i := 0; i < m*n; i++ {
+    if D[i] == 0 {
+      result++
     }
-    for _, pos := range walls {
-        grid[pos[0]*n+pos[1]] = 2
-    }
+  }
     
-    // Directions: up, right, down, left
-    dx := [4]int{-1, 0, 1, 0}
-    dy := [4]int{0, 1, 0, -1}
-    
-    // Process each guard's line of sight
-    for _, guard := range guards {
-        for k := 0; k < 4; k++ {
-            x, y := guard[0], guard[1]
-            newX, newY := x+dx[k], y+dy[k]
-            
-            // Check cells in current direction until hitting boundary or obstacle
-            for newX >= 0 && newX < m && newY >= 0 && newY < n && grid[newX*n+newY] < 2 {
-                grid[newX*n+newY] = 1
-                newX += dx[k]
-                newY += dy[k]
-            }
-        }
-    }
-    
-    // Count unguarded cells (cells with value 0)
-    unguardedCount := m*n - len(guards) - len(walls)
-    for i := 0; i < m*n; i++ {
-        if grid[i] == 1 {
-            unguardedCount--
-        }
-    }
-    
-    return unguardedCount
+  return result
 }
