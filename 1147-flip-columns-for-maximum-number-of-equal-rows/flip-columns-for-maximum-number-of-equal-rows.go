@@ -1,25 +1,35 @@
 func maxEqualRowsAfterFlips(mat [][]int) int {
-    patFreq := make(map[string]int)
-    
-    for _, row := range mat {
+    bitMap := map[string]int{}
+
+    for _,row := range mat {
         pattern := make([]byte, len(row))
         if row[0] == 0 {
-            for i, bit := range row {
+            for i,bit := range row{
                 pattern[i] = byte(bit) + '0'
             }
+            fmt.Println(pattern)
         } else {
-            for i, bit := range row {
-                pattern[i] = byte(bit ^ 1) + '0'
+            for i,bit := range row{
+                pattern[i] = byte(bit)^1 + '0'
             }
+            fmt.Println(pattern)
         }
-        patFreq[string(pattern)]++
+        
+        bitMap[string(pattern)]++
     }
-    
-    maxFreq := 0
-    for _, freq := range patFreq {
-        if freq > maxFreq {
-            maxFreq = freq
-        }
+    fmt.Println(bitMap)
+    max := 0
+    for _,val := range bitMap {
+       if val > max {
+        max = val
+       }
     }
-    return maxFreq
+    return max
 }
+
+// func max(a,b int ) int {
+//     if a > b {
+//         return a
+//     } 
+//     return b
+// }
