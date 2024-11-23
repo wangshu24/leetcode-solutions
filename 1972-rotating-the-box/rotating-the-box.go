@@ -29,7 +29,6 @@ func rotateTheBox(box [][]byte) [][]byte {
 
     for i:=0; i < row; i++ {
         for j:= col-1; j > -1; j-- {
-            // fmt.Println("rBox coord: ", i, " ",col-j-1, "box coord: ", j, " ", i)
             rBox[i][col-j-1] = box[j][i]
         }
     }
