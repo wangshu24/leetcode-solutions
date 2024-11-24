@@ -1,10 +1,8 @@
 func maxMatrixSum(mat [][]int) int64 {
     res:=0
-    
     minVal := int(math.Pow(10,5))
     countNeg:= 0 
     for _,row := range mat {
-        
         for ind,val := range row {
             if val <= 0 {
                 countNeg++
@@ -22,7 +20,6 @@ func maxMatrixSum(mat [][]int) int64 {
         res = res - (minVal*2)
     }
 
-    fmt.Println(res)
     return int64(res)
 }
 
