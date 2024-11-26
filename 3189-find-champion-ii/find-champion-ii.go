@@ -12,7 +12,7 @@ func findChampion(n int, edges [][]int) int {
         if team[ed[0]] == 0 { team[ed[0]] = 0 }
         team[ed[1]]++
     }
-    fmt.Println(team)
+
     res:= []int{}
     teamFound := 0
     for key,val := range team{
