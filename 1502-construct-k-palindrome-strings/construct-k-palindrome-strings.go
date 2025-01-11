@@ -1,12 +1,12 @@
 func canConstruct(s string, k int) bool {
     if len(s) < k {return false}
 
-    chars := map[string]int{}
+    //solution with hashmap
+    chars := make([]int, 26)
     for _, char := range s {
-        chars[string(char)]++
+        chars[char-97]++
     }
     
-    fmt.Println(chars)
     odds := 0
     for _,val := range chars {
         if val % 2 !=  0 {odds++}
