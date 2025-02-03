@@ -74,7 +74,6 @@ func longestMonotonicSubarray(nums []int) int {
                 }
             }
         }
-        fmt.Println(temp, tren)
     }
     res = max(res, len(temp))
     return res
