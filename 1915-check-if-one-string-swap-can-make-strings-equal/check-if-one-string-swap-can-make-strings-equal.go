@@ -15,7 +15,7 @@
 // }
 
 func areAlmostEqual(s1 string, s2 string) bool {
-     if s1 == s2 {return true}
+    if s1 == s2 {return true}
     if len(s1) != len(s2) {return false}
     l:=0
     chars1 := map[byte]int{}
@@ -27,8 +27,7 @@ func areAlmostEqual(s1 string, s2 string) bool {
             l++
         }
     }
-        if l > 2 {return false}
-    fmt.Println(chars1, chars2) 
+    if l > 2 {return false}
     if maps.Equal(chars1, chars2) {
         return true
     }
