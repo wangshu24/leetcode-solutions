@@ -11,13 +11,6 @@ func queryResults(limit int, queries [][]int) []int {
             colMap[prevCol]--
             if colMap[prevCol] == 0 {delete(colMap, prevCol)}
         }
-        // if ballMap[ball] > 0 {
-        //     colMap[ballMap[ball]]--
-        //     if colMap[ballMap[ball]] == 0 {
-        //         delete(colMap, ballMap[ball])
-        //     }
-        // } 
-
         ballMap[ball] = col 
         colMap[col]++
         res[i] = len(colMap)
