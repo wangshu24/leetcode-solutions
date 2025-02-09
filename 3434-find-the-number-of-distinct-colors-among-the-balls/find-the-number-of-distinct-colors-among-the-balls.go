@@ -15,8 +15,6 @@ func queryResults(limit int, queries [][]int) []int {
         colMap[col]++
         res[i] = len(colMap)
     }
-
-    fmt.Println(colMap)
     return res
 }
 
