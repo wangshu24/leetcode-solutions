@@ -10,14 +10,9 @@ func clearDigits(s string) string {
             stack = append(stack,i)
         }
     }
-
-    fmt.Println(stack)
-    fmt.Println(mark)
     
     for i:=0; i < len(stack); i++ {
-        fmt.Println(s[stack[i]]) 
         builder.WriteByte(s[stack[i]])
-        
     }
     
 
