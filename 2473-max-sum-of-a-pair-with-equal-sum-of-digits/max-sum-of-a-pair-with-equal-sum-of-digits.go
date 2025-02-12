@@ -6,13 +6,13 @@ func maximumSum(nums []int) int {
         total[sum] = append(total[sum], num)
     }
 
-    res:=0
+    res:=-1
     for _, list := range total {
         if len(list) >1 {
             res = max(res, list[len(list)-1] + list[len(list)-2] )
         }
     }
-    if res == 0 {res = -1}
+ 
     return res
 }
 
