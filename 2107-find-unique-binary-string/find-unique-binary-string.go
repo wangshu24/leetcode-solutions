@@ -20,8 +20,6 @@ func findDifferentBinaryString(nums []string) string {
         }
         return ""
     }
-    fmt.Println(backtrack(0, res))
-    fmt.Println(res)
      
-    return string(res)
+    return backtrack(0, res)
 }
