@@ -1,76 +1,37 @@
-type queueItem struct {
-	Node *TreeNode
-	Pre  []int
-	Post []int
-}
-
+/**
+ * Definition for a binary tree node.
+ * type TreeNode struct {
+ *     Val int
+ *     Left *TreeNode
+ *     Right *TreeNode
+ * }
+ */
 func constructFromPrePost(preorder []int, postorder []int) *TreeNode {
-	var queue []queueItem
+    postNoRoot := len(postorder) - 1
+    
+    var inOrder  func(preStart, preEnd, postStart int, pre, post []int )  *TreeNode
+    inOrder = func(preStart, preEnd, postStart int, pre, post []int )  *TreeNode {
+        if preStart > preEnd {return nil}
 
-	root := &TreeNode{Val: preorder[0]}
-	preorder = preorder[1:]
-	postorder = postorder[:len(postorder)-1]
+        if preStart == preEnd {
+            node := &TreeNode{}
+            node.Val = pre[preStart]
+            return node
+        }
 
-	if len(preorder) < 1 {
-		return root
-	}
+        leftRoot := pre[preStart+1]
+        noLeftNode := 1
+        for post[postStart + noLeftNode - 1] != leftRoot {
+            noLeftNode++
+        }
 
-	x := 0
-	for preorder[x] != postorder[len(postorder)-1] {
-		x++
-	}
+        node :=&TreeNode{}
+        node.Val = pre[preStart]
+        node.Left = inOrder(preStart+1, preStart+noLeftNode, postStart, pre, post)
+        node.Right = inOrder(preStart + noLeftNode + 1, preEnd, postStart + noLeftNode , pre, post )
+        return node
+    }   
 
-	preLeftTree := preorder[:x]
-	postLeftTree := postorder[:x]
-	preRightTree := preorder[x:]
-	postRightTree := postorder[x:]
-
-	if len(preLeftTree) > 0 {
-		root.Left = &TreeNode{Val: preLeftTree[0]}
-		preLeftTree = preLeftTree[1:]
-		postLeftTree = postLeftTree[:len(postLeftTree)-1]
-		if len(preLeftTree) > 0 {
-			queue = append(queue, queueItem{Node: root.Left, Pre: preLeftTree, Post: postLeftTree})
-		}
-	}
-	if len(preRightTree) > 0 {
-		root.Right = &TreeNode{Val: preRightTree[0]}
-		preRightTree = preRightTree[1:]
-		postRightTree = postRightTree[:len(postRightTree)-1]
-		if len(preRightTree) > 0 {
-			queue = append(queue, queueItem{Node: root.Right, Pre: preRightTree, Post: postRightTree})
-		}
-	}
-	for len(queue) > 0 {
-		item := queue[0]
-		queue = queue[1:]
-
-		x = 0
-		for item.Pre[x] != item.Post[len(item.Post)-1] {
-			x++
-		}
-
-		preLeftTree = item.Pre[:x]
-		postLeftTree = item.Post[:x]
-		preRightTree = item.Pre[x:]
-		postRightTree = item.Post[x:]
-
-		if len(preLeftTree) > 0 {
-			item.Node.Left = &TreeNode{Val: preLeftTree[0]}
-			preLeftTree = preLeftTree[1:]
-			postLeftTree = postLeftTree[:len(postLeftTree)-1]
-			if len(preLeftTree) > 0 {
-				queue = append(queue, queueItem{Node: item.Node.Left, Pre: preLeftTree, Post: postLeftTree})
-			}
-		}
-		if len(preRightTree) > 0 {
-			item.Node.Right = &TreeNode{Val: preRightTree[0]}
-			preRightTree = preRightTree[1:]
-			postRightTree = postRightTree[:len(postRightTree)-1]
-			if len(preRightTree) > 0 {
-				queue = append(queue, queueItem{Node: item.Node.Right, Pre: preRightTree, Post: postRightTree})
-			}
-		}
-	}
-	return root
+    res := inOrder(0, postNoRoot, 0, preorder, postorder)
+    return res
 }
