@@ -7,31 +7,30 @@
  * }
  */
 func constructFromPrePost(preorder []int, postorder []int) *TreeNode {
-    postNoRoot := len(postorder) - 1
-    
-    var inOrder  func(preStart, preEnd, postStart int, pre, post []int )  *TreeNode
-    inOrder = func(preStart, preEnd, postStart int, pre, post []int )  *TreeNode {
-        if preStart > preEnd {return nil}
+    branchLen := len(preorder)-1
+    var inOrder func(preStart, preEnd, postStart int) *TreeNode 
+    inOrder = func(preStart, preEnd, postStart int) *TreeNode {
+        if preStart > preEnd { return nil }
 
         if preStart == preEnd {
             node := &TreeNode{}
-            node.Val = pre[preStart]
+            node.Val = preorder[preStart]
             return node
         }
 
-        leftRoot := pre[preStart+1]
+        leftRoot := preorder[preStart+1]
         noLeftNode := 1
-        for post[postStart + noLeftNode - 1] != leftRoot {
+        for postorder[postStart + noLeftNode -1] != leftRoot {
             noLeftNode++
         }
 
-        node :=&TreeNode{}
-        node.Val = pre[preStart]
-        node.Left = inOrder(preStart+1, preStart+noLeftNode, postStart, pre, post)
-        node.Right = inOrder(preStart + noLeftNode + 1, preEnd, postStart + noLeftNode , pre, post )
+        node := &TreeNode{}
+        node.Val = preorder[preStart]
+        node.Left = inOrder(preStart+1, preStart + noLeftNode, postStart)
+        node.Right = inOrder(preStart + noLeftNode+1, preEnd, postStart + noLeftNode)
         return node
-    }   
+    }
 
-    res := inOrder(0, postNoRoot, 0, preorder, postorder)
+    res := inOrder(0, branchLen, 0)
     return res
 }
