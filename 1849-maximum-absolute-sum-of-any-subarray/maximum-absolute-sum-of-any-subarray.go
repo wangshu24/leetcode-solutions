@@ -12,7 +12,7 @@ func maxAbsoluteSum(nums []int) int {
         minEnd = min(minEnd + nums[i], nums[i])
         minV = min(minV, minEnd)
     }
-    fmt.Println(maxV, minV)
+
     res = max(maxV, -minV)
     return res
 }
