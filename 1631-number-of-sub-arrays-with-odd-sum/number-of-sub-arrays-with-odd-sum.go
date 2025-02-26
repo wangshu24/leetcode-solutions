@@ -1,18 +1,17 @@
-const mod = 1e9 + 7 
+const mod = 1e9+7
 func numOfSubarrays(arr []int) int {
-    var res int 
-    prefixSum, oddCount, evenCount := 0, 0, 1
+    var res int
+    prefSum, odd, even := 0, 0, 1
 
-    for _, num := range arr {
-        prefixSum += num
-        if prefixSum%2 == 0 {
-            res = (res + oddCount) % mod
-            evenCount++
+    for _,num := range arr {
+        prefSum += num 
+        if prefSum %2 == 0 {
+            res += odd
+            even++
         } else {
-            res = (res + evenCount) % mod
-            oddCount++
+            res+= even
+            odd++
         }
     }
-
-    return res
+    return res%mod
 }
