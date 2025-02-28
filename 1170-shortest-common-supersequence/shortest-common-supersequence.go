@@ -1,8 +1,6 @@
 func shortestCommonSupersequence(str1 string, str2 string) string {
 	// Make sure str1 is the longest
-	if len(str1) < len(str2) {
-		return shortestCommonSupersequence(str2, str1)
-	}
+
 
 	dp := make([][]int, len(str1)+1)
 	for i := 0; i < len(dp); i++ {
