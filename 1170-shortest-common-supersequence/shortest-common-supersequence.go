@@ -1,43 +1,28 @@
 func shortestCommonSupersequence(str1 string, str2 string) string {
-	// Make sure str1 is the longest
+    len1, len2 := len(str1), len(str2)
+    prev := make([]string, len1+1)
+    for i:=0 ; i <= len1; i++ {
+        prev[i] = str1[:i]
+    }
+    
+    for row:=1; row <= len2; row++ {
+        cur := make([]string, len1+1)
+        cur[0] = str2[:row]
+        for col:=1; col <= len1; col++ {
+            if str1[col-1] == str2[row-1] {
+                cur[col] = prev[col-1] + string(str2[row-1])
+            } else {
+                res1 := prev[col]
+                res2 := cur[col-1]
+                if len(res1) < len(res2) {
+                    cur[col] = res1 + string(str2[row-1])
+                } else {
+                    cur[col] = res2 + string(str1[col-1])
+                }
+            }
+        }
+        prev = cur
+    }
 
-
-	dp := make([][]int, len(str1)+1)
-	for i := 0; i < len(dp); i++ {
-		dp[i] = make([]int, len(str2)+1)
-	}
-
-	for i := len(str1) - 1; i >= 0; i-- {
-		for j := len(str2) - 1; j >= 0; j-- {
-			if str1[i] == str2[j] {
-				dp[i][j] = 1 + dp[i+1][j+1]
-			} else {
-				dp[i][j] = max(dp[i][j+1], dp[i+1][j])
-			}
-		}
-	}
-
-	var res strings.Builder
-    i, j := 0, 0
-	for i < len(str1) && j < len(str2) {
-		if str1[i] == str2[j] {
-			// Characters are the same; copy character to result and advance both strings.
-			res.WriteByte(str1[i])
-			i++
-			j++
-		} else if dp[i][j+1] > dp[i+1][j] {
-			// Picking str2[j], because the str1[i:] and str2[j+1:] have longest subsequence
-			res.WriteByte(str2[j])
-			j++
-		} else {
-			// if equal or less, we want to advance str1 first as it is bigger
-			res.WriteByte(str1[i])
-			i++
-		}
-	}
-
-	// Simply copy the remaining characters from both strings
-	res.WriteString(str1[i:])
-	res.WriteString(str2[j:])
-	return res.String()
+    return prev[len1]
 }
