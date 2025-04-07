@@ -23,17 +23,17 @@ func generateParenthesis(n int) []string {
 }
 
 func wellform(s string) bool {
-    open := []byte{}
+    open := 0
     for _,char := range s {
         if char == '(' {
-            open = append(open, '(')
+            open++ 
         } else {
-            if len(open) == 0 {
+            if open == 0 {
                 return false
-            } else if open[len(open)-1] == '(' {
-                open = open[:len(open)-1]
+            } else {
+                open--
             }
         }
     }
-    return len(open) == 0
+    return open == 0
 }
