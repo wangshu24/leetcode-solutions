@@ -13,7 +13,6 @@ func countArrangement(n int) int {
 
         for j:=0; j < n; j++ {
             if !visit[j+1] && beautiful(i+1, j+1) {
-                fmt.Println(i, j+1)
                 visit[j+1] = true
                 backtrack(i+1)
                 visit[j+1] = false
