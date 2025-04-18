@@ -1,31 +1,37 @@
-import (
-	"slices"
-)
-
 func findMinimumTime(strength []int, k int) int {
 	n := len(strength)
-	slices.Sort(strength)
-
-	ans := 1e9
-
-	var dfs func(mask, power, time int)
-	dfs = func(mask, power, time int) {
-		if mask == (1<<n)-1 {
-			if float64(time) < ans {
-				ans = float64(time)
-			}
-			return
-		}
-
-		for i := 0; i < n; i++ {
-			if (mask>>i)&1 == 1 {
-				continue
-			}
-			add := (strength[i] + power - 1) / power
-			dfs(mask|(1<<i), power+k, time+add)
-		}
+	tot := 1 << n
+	dp := make([]int, tot)
+	for i := 0; i < tot; i++ {
+		dp[i] = -1
 	}
-
-	dfs(0, 1, 0)
-	return int(ans)
+	var rec func(mask int) int
+	rec = func(mask int) int {
+		if mask == tot-1 {
+			return 0
+		}
+		if dp[mask] != -1 {
+			return dp[mask]
+		}
+		cnt := 0
+		for i := 0; i < n; i++ {
+			if mask&(1<<i) != 0 {
+				cnt++
+			}
+		}
+		v := 1 + cnt*k
+		best := 1 << 30
+		for i := 0; i < n; i++ {
+			if mask&(1<<i) == 0 {
+				t := (strength[i] + v - 1) / v
+				cur := t + rec(mask|(1<<i))
+				if cur < best {
+					best = cur
+				}
+			}
+		}
+		dp[mask] = best
+		return best
+	}
+	return rec(0)
 }
