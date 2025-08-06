@@ -1,12 +1,16 @@
 func numOfUnplacedFruits(fruits []int, baskets []int) int {
-    left := len(fruits) 
-    for i:=0; i < len(fruits);i++ {
-        for j:=0; j < len(fruits);j++ {
-            if fruits[i] <= baskets[j]{
-                baskets[j] = 0
-                left--
-                break
+    used := make([]bool, len(fruits))
+    left := len(fruits)
+
+    for i:=range fruits {
+        for j:= range baskets {
+            if used[j] || baskets[j] < fruits[i] {
+                continue
             }
+
+            used[j] = true
+            left--
+            break
         }
     }
     return left
