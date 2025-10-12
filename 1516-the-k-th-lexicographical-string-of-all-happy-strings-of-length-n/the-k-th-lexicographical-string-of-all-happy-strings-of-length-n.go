@@ -1,47 +1,34 @@
-// func getHappyString(n int, k int) string {
-//     var res string
-//     var strs []string
-//     fmt.Println(strs)
-
-//     var createString func()
-//     createString = func () {
-
-//     }
-//     for len(strs) < k {
-
-//     }
-
-//     return res 
-// }
-
-func generateString(n int, current string, count *int, k int, result *string) {
-    if *count == k {
-        return
-    }
-
-    if len(current) == n {
-        *count++
-        if *count == k {
-            *result = current
-        }
-        return
-    }
-
-    for _, ch := range []rune{'a', 'b', 'c'} {
-        if len(current) > 0 && current[len(current)-1] == byte(ch) {
-            continue
-        }
-        generateString(n, current+string(ch), count, k, result)
-    }
-}
-
 func getHappyString(n int, k int) string {
-    count := 0
-    result := ""
-    generateString(n, "", &count, k, &result)
+    var res string
+    var strs []string
+    chars := []byte{ 'a','b','c'}
     
-    if count < k {
+    var createString func(int, []byte, byte)
+    createString = func (strlen int, str []byte, prev byte) {
+        if strlen == n {
+            cp := string(str)
+            strs = append(strs, cp)
+            return
+        }
+        for i:=0; i < 3; i++ {
+            if  prev != chars[i] {
+                str = append(str, chars[i])
+                createString(strlen+1, str, chars[i])
+                str = str[:len(str)-1]
+            }
+        } 
+        return 
+    }
+
+
+    createString(0, []byte{}, '0')
+
+    fmt.Println(strs)
+
+    for len(strs) < k {
         return ""
     }
-    return result
+
+    res = strs[k-1]
+    return res 
 }
