@@ -20,11 +20,8 @@ func getHappyString(n int, k int) string {
         return 
     }
 
-
     createString(0, []byte{}, '0')
-
-    fmt.Println(strs)
-
+    
     for len(strs) < k {
         return ""
     }
