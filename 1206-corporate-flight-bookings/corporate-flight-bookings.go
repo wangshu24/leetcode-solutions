@@ -14,6 +14,5 @@ func corpFlightBookings(bookings [][]int, n int) []int {
     for i:=1; i < len(res); i++ {
         res[i] = res[i-1] + res[i]
     }
-    fmt.Println(res)
     return res
 }
