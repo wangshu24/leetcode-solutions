@@ -19,6 +19,5 @@ func findMinArrowShots(points [][]int) int {
         }
     }
 
-
     return res
 }
