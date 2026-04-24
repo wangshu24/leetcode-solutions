@@ -10,11 +10,11 @@ func findMinArrowShots(points [][]int) int {
     fmt.Println(points)
 
     res, minx := 1, points[0][1]
-    for _, point := range points {
-        if minx >= point[0] {
+    for i:=0; i < len(points); i++  {
+        if minx >= points[i][0] {
             continue
         } else {
-            minx = point[1]
+            minx = points[i][1]
             res++
         }
     }
