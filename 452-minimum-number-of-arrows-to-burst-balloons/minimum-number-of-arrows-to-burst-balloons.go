@@ -5,7 +5,7 @@ import (
 
 func findMinArrowShots(points [][]int) int {
     slices.SortFunc(points, func(a, b []int) int {
-            return cmp.Compare(a[1], b[1])
+        return cmp.Compare(a[1], b[1])
     })
     fmt.Println(points)
 
