@@ -17,7 +17,7 @@ func maxCoins(nums []int) int {
             return dp[l][r]
         }
 
-        dp[l][r] = 0
+        // dp[l][r] = 0
         for i:=l; i <= r; i++ {
             coins := nums[l-1] * nums[i] * nums[r+1]
             coins += dfs(l, i-1) + dfs(i+1, r)
