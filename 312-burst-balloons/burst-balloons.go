@@ -25,6 +25,7 @@ func maxCoins(nums []int) int {
         }
         return dp[l][r]
     }
-    
-    return dfs(1, len(nums)-2)
+    res := dfs(1, len(nums)-2)
+    fmt.Println(dp)
+    return res
 }
