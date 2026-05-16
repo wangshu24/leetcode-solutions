@@ -1,18 +1,17 @@
 func canFinish(numCourses int, prerequisites [][]int) bool {
-    indegree := make([]int, numCourses)
+    degree := make([]int, numCourses)
     adj := make(map[int][]int)
-    for _, preq := range prerequisites {
-        a, b := preq[0], preq[1]
-        adj[b] = append(adj[b], a)
-        indegree[a]++
+
+    for _, val := range prerequisites {
+        degree[val[0]]++
+        adj[val[1]] = append(adj[val[1]], val[0])
     }
-    fmt.Println(adj, indegree)
     
     var cycle func() bool
     cycle = func() bool {
         q := []int{}
         count := 0
-        for ind, val := range indegree {
+        for ind, val := range degree {
             if val == 0 {
                 q = append(q, ind)
                 count++
@@ -20,17 +19,16 @@ func canFinish(numCourses int, prerequisites [][]int) bool {
         }
 
         for len(q) > 0 {
-            c := q[0]
+            x := q[0] 
             q = q[1:]
-            for _, v := range adj[c] {
-                indegree[v]--
-                if indegree[v] == 0 {
+            for _, val := range adj[x] {
+                degree[val]--
+                if degree[val] == 0 {
                     count++
-                    q = append(q, v)
+                    q = append(q, val)
                 }
             }
         }
-
         if count == numCourses {
             return true
         }
