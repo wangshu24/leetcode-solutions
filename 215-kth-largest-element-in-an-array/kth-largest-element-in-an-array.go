@@ -14,6 +14,7 @@ func (h *MinHeap) Pop() interface{} {
 
 func findKthLargest(nums []int, k int) int {
     h := &MinHeap{}
+    heap.Init(h)
     for _, num := range nums {
         if h.Len() >= k && (*h)[0] < num {
             heap.Pop(h)
