@@ -23,6 +23,5 @@ func findKthLargest(nums []int, k int) int {
         } 
     }
 
-    fmt.Println(*h)
     return (*h)[0]
 }
